@@ -1,4 +1,4 @@
-## # Introduction
+## Explore the world of Lego
 <p><img src="https://assets.datacamp.com/production/project_981/img/lego_unsplash.jpg" alt="A picture of Lego characters!"></p>
 <h3 id="letslookatlegosets">Let's look at Lego sets!</h3>
 <p>Lego is a household name across the world, supported by a diverse toy line, hit movies, and a series of successful video games. In this project, we are going to explore a key development in the history of Lego: the introduction of licensed sets such as Star Wars, Super Heroes, and Harry Potter.</p>
@@ -27,13 +27,8 @@
 
 
 ```python
-# Use this cell to begin your analyses, and add as many cells as you would like!
-# Find the total number of licensed sets.
-# Find the total number of licensed sets that are Star Wars Themed. 
-# Divide star wars themed / total number of sets * 100 = Answer to Question 1
 
-#Start with total number of licensed sets 
-
+# Start with total number of licensed sets 
 
 import pandas as pd
 
@@ -51,12 +46,11 @@ import matplotlib as plt
 
 
 ```python
-# let's join/merge the datasets first. usually use merge. 
+# Let's join/merge the datasets first using merge().
 
-
+# Merge on parent theme from the df and name from the themes table.
 merged_df = df.merge(themes, left_on = 'parent_theme', right_on = 'name')
 ```
-
 
 ```python
 merged_df.head()
@@ -66,19 +60,7 @@ merged_df.head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+    
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -163,12 +145,12 @@ merged_df.head()
 
 
 ```python
+# Due to the merge there is a duplicate column. Let's get rid of it.
 merged_df.drop(columns='name_y', inplace=True)
 ```
 
 
 ```python
-# Data Cleaning
 # Inspect NA values for each column
 merged_df.isna().sum()
 
@@ -245,11 +227,7 @@ In which year was the Star Wars theme not the most popular?
 
 ```python
 # Find number of sets released each year 
-  # Groupby Year, Count # of sets released per year
-# What was the year in which min number of Star Wars theme sets were released?
-
-# Compare total licensed releases vs SW licensed releases
-# if SW licensed release/total > 50% then SW is popular
+  # This means Groupby Year, Count # of sets released per year
 
 lego_year = total_licensed.groupby(['year','parent_theme'])['set_num'].count().reset_index()
 
@@ -421,35 +399,7 @@ ax.set_xlabel('Theme')
 plt.show()
 ```
 
-
 ![png](output_29_0.png)
-
-
-
-```python
-%%nose
-
-def test_force():
-    assert(int(the_force) != 45), \
-        "Have you properly inspected your data and dealt with missing values appropriately?"
-    assert(int(the_force) != 50), \
-        "Have you dropped the relevant missing rows? Remember, not all rows with missing values need to be dropped!"
-    assert int(the_force) == 51 or int(the_force) == 52, \
-        "Have you correctly calculated the percentage of licensed sets that belonged to the Star Wars theme?"
-
-def test_new_era():
-    assert((type(new_era)==int) & (len(str(new_era))==4)), \
-        "Have you entered the year in which Star Wars was not the most popular theme as a four digit integer?"
-    assert int(new_era) == 2017, \
-        "Have you correctly calculated the year in which Star Wars was no longer the most popular set?"
-```
-
-
-
-
-
-
-    2/2 tests passed
 
 
 
